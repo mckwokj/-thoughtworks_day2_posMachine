@@ -26,4 +26,12 @@ public class Receipt {
     public void setTotalPrice(int totalPrice) {
         this.totalPrice = totalPrice;
     }
+
+    @Override
+    public String toString() {
+        return "Receipt{" +
+                "itemDetail=" + itemDetail +
+                ", totalPrice=" + totalPrice +
+                '}';
+    }
 }

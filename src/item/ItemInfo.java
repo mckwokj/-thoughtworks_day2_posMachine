@@ -34,4 +34,13 @@ public class ItemInfo {
     public void setPrice(int price) {
         this.price = price;
     }
+
+    @Override
+    public String toString() {
+        return "ItemInfo{" +
+                "name='" + name + '\'' +
+                ", barcode='" + barcode + '\'' +
+                ", price=" + price +
+                '}';
+    }
 }

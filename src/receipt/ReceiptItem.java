@@ -44,4 +44,14 @@ public class ReceiptItem {
     public void setSubTotal(int subTotal) {
         this.subTotal = subTotal;
     }
+
+    @Override
+    public String toString() {
+        return "ReceiptItem{" +
+                "name='" + name + '\'' +
+                ", quantity=" + quantity +
+                ", unitPrice=" + unitPrice +
+                ", subTotal=" + subTotal +
+                '}';
+    }
 }

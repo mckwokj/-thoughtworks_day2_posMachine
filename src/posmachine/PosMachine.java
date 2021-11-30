@@ -1,7 +1,6 @@
 package posmachine;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import item.ItemInfo;
 import receipt.Receipt;
@@ -19,10 +18,31 @@ public class PosMachine {
         allData.add(new ItemInfo("Battery", "ITEM000004", 2));
         allData.add(new ItemInfo("Instant Noodles", "ITEM000005", 4));
 
-        return allData;
+        List<ItemInfo> itemInfos = new ArrayList<>();
+        itemInfos.add(new ItemInfo("Coca-Cola", "ITEM000000", 3));
+        itemInfos.add(new ItemInfo("Coca-Cola", "ITEM000000", 3));
+        itemInfos.add(new ItemInfo("Coca-Cola", "ITEM000000", 3));
+        itemInfos.add(new ItemInfo("Coca-Cola", "ITEM000000", 3));
+        itemInfos.add(new ItemInfo("Coca-Cola", "ITEM000000", 3));
+        itemInfos.add(new ItemInfo("Sprite", "ITEM000001", 3));
+        itemInfos.add(new ItemInfo("Sprite", "ITEM000001", 3));
+        itemInfos.add(new ItemInfo("Battery", "ITEM000004", 2));
+
+        return itemInfos;
     }
 
     private Receipt calculateReceipt (List<ItemInfo> itemWithDetail) {
+
+//        for (ItemInfo itemInfo: itemWithDetail) {
+//            System.out.println(itemInfo);
+//        }
+
+        Map<String, ReceiptItem> receiptItems = calculateReceiptItems(itemWithDetail);
+
+        for (String name: receiptItems.keySet()) {
+            System.out.println(receiptItems.get(name));
+        }
+
         return null;
     }
 
@@ -32,8 +52,21 @@ public class PosMachine {
         return 0;
     }
 
-    private List<ReceiptItem> receiptItems(List<ItemInfo> itemWithDetail) {
-        return null;
+    private Map<String, ReceiptItem> calculateReceiptItems(List<ItemInfo> itemWithDetail) {
+        Map<String, ReceiptItem> receiptItems = new HashMap<>();
+
+        for (ItemInfo item: itemWithDetail) {
+            if (!receiptItems.containsKey(item.getName())) {
+                receiptItems.put(item.getName(), new ReceiptItem(item.getName(), 1, item.getPrice(), item.getPrice()));
+            } else {
+                int oldQuantity = receiptItems.get(item.getName()).getQuantity();
+                int oldSubTotal = receiptItems.get(item.getName()).getSubTotal();
+                receiptItems.remove(item.getName());
+                receiptItems.put(item.getName(), new ReceiptItem(item.getName(), oldQuantity+1, item.getPrice(), oldSubTotal+item.getPrice()));
+            }
+        }
+
+        return receiptItems;
     }
 
     public static void main(String[] args) {
@@ -50,6 +83,7 @@ public class PosMachine {
         PosMachine m1 = new PosMachine();
 
         List<ItemInfo> allData = m1.getItemInfos(barcodes);
+
         Receipt receipt = m1.calculateReceipt(allData);
     }
 }
