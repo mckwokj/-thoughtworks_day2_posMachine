@@ -33,23 +33,26 @@ public class PosMachine {
 
     private Receipt calculateReceipt (List<ItemInfo> itemWithDetail) {
 
-//        for (ItemInfo itemInfo: itemWithDetail) {
-//            System.out.println(itemInfo);
-//        }
-
         Map<String, ReceiptItem> receiptItems = calculateReceiptItems(itemWithDetail);
+        int totalPrice = calculateTotalPrice(receiptItems);
+        return new Receipt(receiptItems, totalPrice);
+    }
 
-        for (String name: receiptItems.keySet()) {
-            System.out.println(receiptItems.get(name));
-        }
-
+    private Receipt renderReceipt (Receipt receipt) {
+        String receiptContent = "";
+        receiptContent += "***<store earning no money>Receipt ***\r\n" + receipt + "----------------------\r\n" + "Total: " + receipt.getTotalPrice() + " (yuan)\r\n**********************";
+        System.out.println(receiptContent);
         return null;
     }
 
-    private Receipt renderReceipt (Receipt receipt) { return null; }
+    private int calculateTotalPrice(Map<String, ReceiptItem> receiptItems) {
+        int totalPrice = 0;
 
-    private int calculateTotalPrice(List<ReceiptItem> receiptItems) {
-        return 0;
+        for (String receiptItemName: receiptItems.keySet()) {
+            totalPrice += receiptItems.get(receiptItemName) .getSubTotal();
+        }
+
+        return totalPrice;
     }
 
     private Map<String, ReceiptItem> calculateReceiptItems(List<ItemInfo> itemWithDetail) {
@@ -85,5 +88,7 @@ public class PosMachine {
         List<ItemInfo> allData = m1.getItemInfos(barcodes);
 
         Receipt receipt = m1.calculateReceipt(allData);
+
+        m1.renderReceipt(receipt);
     }
 }

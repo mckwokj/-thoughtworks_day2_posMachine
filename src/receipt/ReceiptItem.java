@@ -47,11 +47,6 @@ public class ReceiptItem {
 
     @Override
     public String toString() {
-        return "ReceiptItem{" +
-                "name='" + name + '\'' +
-                ", quantity=" + quantity +
-                ", unitPrice=" + unitPrice +
-                ", subTotal=" + subTotal +
-                '}';
+        return "Name: " + name + ", Quantity: " + quantity + ", Unit price: " + unitPrice + " (yuan), Subtotal: " + subTotal + " (yuan)\r\n";
     }
 }

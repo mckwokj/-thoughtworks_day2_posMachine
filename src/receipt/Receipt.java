@@ -1,21 +1,22 @@
 package receipt;
 
 import java.util.List;
+import java.util.Map;
 
 public class Receipt {
-    private List<ReceiptItem> itemDetail;
+    private Map<String, ReceiptItem> itemDetail;
     private int totalPrice;
 
-    public Receipt(List<ReceiptItem> itemDetail, int totalPrice) {
+    public Receipt(Map<String, ReceiptItem> itemDetail, int totalPrice) {
         this.itemDetail = itemDetail;
         this.totalPrice = totalPrice;
     }
 
-    public List<ReceiptItem> getItemDetail() {
+    public Map<String, ReceiptItem> getItemDetail() {
         return itemDetail;
     }
 
-    public void setItemDetail(List<ReceiptItem> itemDetail) {
+    public void setItemDetail(Map<String, ReceiptItem> itemDetail) {
         this.itemDetail = itemDetail;
     }
 
@@ -29,9 +30,10 @@ public class Receipt {
 
     @Override
     public String toString() {
-        return "Receipt{" +
-                "itemDetail=" + itemDetail +
-                ", totalPrice=" + totalPrice +
-                '}';
+        String content = "";
+        for (String key: itemDetail.keySet()) {
+            content += itemDetail.get(key).toString();
+        }
+        return content;
     }
 }
